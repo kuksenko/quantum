@@ -1,0 +1,14 @@
+Quantum Performance Effects Demo files
+--------------------------------------------------------------------------
+
+These tests were used in "Quantum Performance Effects" presentation.
+
+Tests are created with JMH (Java Microbenchmark Harness):
+    http://openjdk.java.net/projects/code-tools/jmh/
+
+You have to download and build JMH before compiling QPE Demo.
+
+You can read slides of the presentation here:
+  [TBD: link to slides will be added after JavaOneRussia 2013]
+
+
