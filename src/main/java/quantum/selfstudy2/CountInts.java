@@ -1,7 +1,8 @@
 package quantum.selfstudy2;
 
-import org.openjdk.jmh.annotations.BenchmarkType;
+import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
+import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Setup;
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 @State
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
+@BenchmarkMode(Mode.AverageTime)
 public class CountInts {
 
     public static final int SIZE = 4 * 1024;
@@ -78,37 +80,37 @@ public class CountInts {
         return cnt;
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE * SIZE)
     public int testShuffled0() {
         return count0(shuffledData0, shuffledData1);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE * SIZE)
     public int testSorted0() {
         return count0(sortedData0, sortedData1);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE * SIZE)
     public int testShuffled1() {
         return count1(shuffledData0, shuffledData1);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE * SIZE)
     public int testSorted1() {
         return count1(sortedData0, sortedData1);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE * SIZE)
     public int testShuffled2() {
         return count2(shuffledData0, shuffledData1);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE * SIZE)
     public int testSorted2() {
         return count2(sortedData0, sortedData1);

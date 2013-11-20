@@ -1,7 +1,8 @@
 package quantum.demo2;
 
-import org.openjdk.jmh.annotations.BenchmarkType;
+import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
+import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Setup;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 @State
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
+@BenchmarkMode(Mode.AverageTime)
 public class IntSum {
 
     public static final int SIZE = 2048;
@@ -30,7 +32,7 @@ public class IntSum {
         array = Utils.newRandomIntArray(SIZE);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public int test1() {
         int s = 0;
@@ -40,7 +42,7 @@ public class IntSum {
         return s;
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public int test2() {
         int s0 = 0;
@@ -52,7 +54,7 @@ public class IntSum {
         return s0 + s1;
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public int test4() {
         int s0 = 0;

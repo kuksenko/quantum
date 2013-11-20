@@ -1,7 +1,8 @@
 package quantum.selfstudy1;
 
-import org.openjdk.jmh.annotations.BenchmarkType;
+import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
+import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Setup;
@@ -19,9 +20,10 @@ import java.util.concurrent.TimeUnit;
  */
 @State
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
+@BenchmarkMode(Mode.AverageTime)
 public class CacheL4 {
 
-    public static final int SIZE = 1024 * 1024; // double[SIZE] ~ 8M
+    public static final int SIZE = 2 * 1024 * 1024; // double[SIZE] ~ 16M
 
     private double[] array;
     private int[] ordered;
@@ -37,37 +39,37 @@ public class CacheL4 {
         shuffled = Utils.shuffledCopyOf(ordered);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public double ordered1() {
         return Sums.sum1(array, ordered);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public double ordered2() {
         return Sums.sum2(array, ordered);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public double ordered4() {
         return Sums.sum4(array, ordered);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public double shuffled1() {
         return Sums.sum1(array, shuffled);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public double shuffled2() {
         return Sums.sum2(array, shuffled);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public double shuffled4() {
         return Sums.sum4(array, shuffled);

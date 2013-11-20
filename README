@@ -9,6 +9,8 @@ Tests are created with JMH (Java Microbenchmark Harness):
 You have to download and build JMH before compiling QPE Demo.
 
 You can read slides of the presentation here:
-  [TBD: link to slides will be added after JavaOneRussia 2013]
+    http://shipilev.net/pub/talks/j1-April2013-quantum-performance.pdf
+
+PS Updated 20.11.2013 
 
 

@@ -1,7 +1,8 @@
 package quantum.demo2;
 
-import org.openjdk.jmh.annotations.BenchmarkType;
+import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
+import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Setup;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 @State
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
+@BenchmarkMode(Mode.AverageTime)
 public class IntMul {
 
     public static final int SIZE = 2048;
@@ -30,7 +32,7 @@ public class IntMul {
         array = Utils.newRandomIntArray(SIZE);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public int test1() {
         int p = 1;
@@ -40,7 +42,7 @@ public class IntMul {
         return p;
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public int test2() {
         int p0 = 1;
@@ -52,7 +54,7 @@ public class IntMul {
         return p0 * p1;
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public int test4() {
         int p0 = 1;
@@ -68,7 +70,7 @@ public class IntMul {
         return (p0 * p1) * (p2 * p3);
     }
 
-    @GenerateMicroBenchmark(BenchmarkType.AverageTimePerOp)
+    @GenerateMicroBenchmark
     @OperationsPerInvocation(SIZE)
     public int test4z() {
         int p0 = 1;
