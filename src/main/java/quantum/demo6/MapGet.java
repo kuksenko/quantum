@@ -2,7 +2,7 @@ package quantum.demo6;
 
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
@@ -52,7 +52,7 @@ public class MapGet {
         }
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public int testGetT() {
         int s = 0;
         for (int key : keys) {
@@ -61,7 +61,7 @@ public class MapGet {
         return s;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public int testGetJ() {
         int s = 0;
         for (int key : keys) {
@@ -70,7 +70,7 @@ public class MapGet {
         return s;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public int testGetJBoxed() {
         int s = 0;
         for (Integer key : boxedKeys) {

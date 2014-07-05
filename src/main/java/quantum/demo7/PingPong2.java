@@ -1,13 +1,13 @@
 package quantum.demo7;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Group;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.logic.Control;
+import org.openjdk.jmh.infra.Control;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -43,14 +43,14 @@ public class PingPong2 {
         this.flag = flag;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("monitor")
     public void mping(Control c) {
         while (isFlag() & !c.stopMeasurement) ;
         setFlag(true);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("monitor")
     public void mpong(Control c) {
         while (!isFlag() & !c.stopMeasurement) ;
@@ -77,14 +77,14 @@ public class PingPong2 {
 
     private Lock lock = new ReentrantLock();
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("reentrant")
     public void rping(Control c) {
         while (isFlag(lock) & !c.stopMeasurement) ;
         setFlag(lock, true);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("reentrant")
     public void rpong(Control c) {
         while (!isFlag(lock) & !c.stopMeasurement) ;
@@ -93,14 +93,14 @@ public class PingPong2 {
 
     private ReadWriteLock rwLock = new ReentrantReadWriteLock();
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("rwlock")
     public void rwping(Control c) {
         while (isFlag(rwLock.readLock()) & !c.stopMeasurement) ;
         setFlag(rwLock.writeLock(), true);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("rwlock")
     public void rwpong(Control c) {
         while (!isFlag(rwLock.readLock()) & !c.stopMeasurement) ;

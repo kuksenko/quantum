@@ -1,10 +1,11 @@
 package quantum.selfstudy0;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import quantum.util.Utils;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Sergey Kuksenko
  */
-@State
+@State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.AverageTime)
 public class BadValue {
@@ -37,7 +38,7 @@ public class BadValue {
         dst = new double[SIZE];
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public void testAddNormalValue() {
         for (int i = 0; i < src.length; i++) {
@@ -45,7 +46,7 @@ public class BadValue {
         }
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public void testAddBadValue() {
         for (int i = 0; i < src.length; i++) {

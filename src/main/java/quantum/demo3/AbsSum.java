@@ -1,10 +1,11 @@
 package quantum.demo3;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import quantum.util.Utils;
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Sergey Kuksenko
  */
-@State
+@State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.AverageTime)
 public class AbsSum {
@@ -63,19 +64,19 @@ public class AbsSum {
         return sum;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int branch_regular() {
         return absSumBranch(regularData);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int branch_sorted() {
         return absSumBranch(sortedData);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int branch_shuffled() {
         return absSumBranch(shuffledData);
@@ -89,19 +90,19 @@ public class AbsSum {
         return sum;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int predicated_regular() {
         return absSumPredicated(regularData);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int predicated_sorted() {
         return absSumPredicated(sortedData);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int predicated_shuffled() {
         return absSumPredicated(shuffledData);

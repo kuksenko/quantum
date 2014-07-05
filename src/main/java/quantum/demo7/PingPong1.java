@@ -1,13 +1,13 @@
 package quantum.demo7;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Group;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.logic.Control;
+import org.openjdk.jmh.infra.Control;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -32,7 +32,7 @@ public class PingPong1 {
 
     private AtomicBoolean flag_atomic = new AtomicBoolean(true);
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("woodpecker")
     public void t2_ping(Control c) {
         // spinloop in the "Nuclear Woodpecker" style
@@ -40,13 +40,13 @@ public class PingPong1 {
 
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("woodpecker")
     public void t2_pong(Control c) {
         while (!flag_atomic.compareAndSet(true, false) & !c.stopMeasurement) ;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("atomic")
     public void t3_ping(Control c) {
         // "normal" spinloop style
@@ -58,7 +58,7 @@ public class PingPong1 {
         }
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("atomic")
     public void t3_pong(Control c) {
         while (!c.stopMeasurement) {

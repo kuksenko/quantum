@@ -1,10 +1,11 @@
 package quantum.demo4;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import quantum.util.Utils;
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Sergey Kuksenko
  */
-@State
+@State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.AverageTime)
 public class CountFlags {
@@ -68,25 +69,25 @@ public class CountFlags {
         return cnt;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE * SIZE)
     public int countConditionalShuffled() {
         return countConditional(shuffledFlags0, shuffledFlags1);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE * SIZE)
     public int countConditionalSorted() {
         return countConditional(sortedFlags0, sortedFlags1);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE * SIZE)
     public int countLogicalShuffled() {
         return countLogical(shuffledFlags0, shuffledFlags1);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE * SIZE)
     public int countLogicalSorted() {
         return countLogical(sortedFlags0, sortedFlags1);

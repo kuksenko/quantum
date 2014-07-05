@@ -1,10 +1,11 @@
 package quantum.demo5;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import quantum.util.Utils;
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Sergey Kuksenko
  */
-@State
+@State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.AverageTime)
 public class Table {
@@ -130,61 +131,61 @@ public class Table {
         return s;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive1_regular() {
         return sum(regular1);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive2_regular() {
         return sum(regular2);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive2_sorted() {
         return sum(sorted2);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive2_shuffled() {
         return sum(shuffled2);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive3_regular() {
         return sum(regular3);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive3_sorted() {
         return sum(sorted3);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive3_shuffled() {
         return sum(shuffled3);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive4_regular() {
         return sum(regular4);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive4_sorted() {
         return sum(sorted4);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive4_shuffled() {
         return sum(shuffled4);
@@ -199,7 +200,7 @@ public class Table {
         return s;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive3_unrolledRegular() {
         return sumUnrolledBy2(regular3);
@@ -211,7 +212,7 @@ public class Table {
      * Could you explain results?
      * Hint: "type profile"
      */
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public int receive4_unrolledRegular() {
         return sumUnrolledBy2(regular4);

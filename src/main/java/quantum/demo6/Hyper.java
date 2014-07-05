@@ -1,6 +1,6 @@
 package quantum.demo6;
 
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 
@@ -25,7 +25,7 @@ public class Hyper {
     public static double d1 = 233.2;
     public static double d2 = 67.3;
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(5)
     public double troll() {
         return (d0 / d2) / ((d1 / d2) / (d0 / d1));

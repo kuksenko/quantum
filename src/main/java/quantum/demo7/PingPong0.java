@@ -1,13 +1,13 @@
 package quantum.demo7;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Group;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.logic.Control;
+import org.openjdk.jmh.infra.Control;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,14 +35,14 @@ public class PingPong0 {
      * Dishonest and unreliable microbenchmark.
      * 'ping' and 'pong' may not see 'flag' modification
      */
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("shared_memory")
     public void ping(Control c) {
         while (flag & !c.stopMeasurement) ;
         flag = true;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("shared_memory")
     public void pong(Control c) {
         while (!flag & !c.stopMeasurement) ;
@@ -51,14 +51,14 @@ public class PingPong0 {
 
     private volatile boolean vflag = true;
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("Volatile")
     public void vping(Control c) {
         while (vflag & !c.stopMeasurement) ;
         vflag = true;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @Group("Volatile")
     public void vpong(Control c) {
         while (!vflag & !c.stopMeasurement) ;

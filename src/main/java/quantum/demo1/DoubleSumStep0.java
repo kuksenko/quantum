@@ -1,6 +1,7 @@
 package quantum.demo1;
 
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import quantum.util.Utils;
@@ -12,7 +13,7 @@ import quantum.util.Utils;
  *
  * @author Sergey Kuksenko
  */
-@State
+@State(Scope.Thread)
 public class DoubleSumStep0 {
 
     public static final int SIZE = 2048;
@@ -24,7 +25,7 @@ public class DoubleSumStep0 {
         array = Utils.newRandomDoubleArray(SIZE);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public double test1() {
         double sum = 0.0;
         for (int i = 0; i < array.length; i++) {
@@ -33,7 +34,7 @@ public class DoubleSumStep0 {
         return sum;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public double testManualUnroll() {
         double sum = 0.0;
         for (int i = 0; i < array.length; i += 4) {

@@ -1,11 +1,10 @@
 package quantum.demo1;
 
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import quantum.util.Utils;
-
-import java.util.Arrays;
 
 /**
  * Quantum Performance Effects (demo)
@@ -14,7 +13,7 @@ import java.util.Arrays;
  *
  * @author Sergey Kuksenko
  */
-@State
+@State(Scope.Thread)
 public class DoubleSumStep4 {
 
     public static final int SIZE = 2048;
@@ -26,7 +25,7 @@ public class DoubleSumStep4 {
         array = Utils.newRandomDoubleArray(SIZE);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public double test1() {
         double sum = 0.0;
         for (int i = 0; i < array.length; i++) {
@@ -35,7 +34,7 @@ public class DoubleSumStep4 {
         return sum;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public double testManualUnroll() {
         double sum = 0.0;
         for (int i = 0; i < array.length; i += 4) {
@@ -44,7 +43,7 @@ public class DoubleSumStep4 {
         return sum;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public double test2() {
         double sum0 = 0.0;
         double sum1 = 0.0;
@@ -55,7 +54,7 @@ public class DoubleSumStep4 {
         return sum0 + sum1;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public double test4() {
         double sum0 = 0.0;
         double sum1 = 0.0;

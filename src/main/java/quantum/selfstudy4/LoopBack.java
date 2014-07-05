@@ -1,10 +1,11 @@
 package quantum.selfstudy4;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import quantum.util.Utils;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Sergey Kuksenko
  */
-@State
+@State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.AverageTime)
 public class LoopBack {
@@ -61,55 +62,55 @@ public class LoopBack {
         return s;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(K)
     public int foreach1K() {
         return foreachSum(arr1K);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(K)
     public int forward1K() {
         return forwardSum(arr1K);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(K)
     public int backward1K() {
         return backwardSum(arr1K);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(32 * K)
     public int foreach32K() {
         return foreachSum(arr32K);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(32 * K)
     public int forward32K() {
         return forwardSum(arr32K);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(32 * K)
     public int backward32K() {
         return backwardSum(arr32K);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(4 * M)
     public int foreach4M() {
         return foreachSum(arr4M);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(4 * M)
     public int forward4M() {
         return forwardSum(arr4M);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(4 * M)
     public int backward4M() {
         return backwardSum(arr4M);

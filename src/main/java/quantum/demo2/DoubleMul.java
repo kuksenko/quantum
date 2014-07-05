@@ -1,10 +1,11 @@
 package quantum.demo2;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import quantum.util.Utils;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Sergey Kuksenko
  */
-@State
+@State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.AverageTime)
 public class DoubleMul {
@@ -32,7 +33,7 @@ public class DoubleMul {
         array = Utils.newRandomDoubleArray(SIZE);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public double test1() {
         double p = 1.0;
@@ -42,7 +43,7 @@ public class DoubleMul {
         return p;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public double test2() {
         double p0 = 1.0;
@@ -54,7 +55,7 @@ public class DoubleMul {
         return p0 * p1;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public double test4() {
         double p0 = 1.0;
@@ -70,7 +71,7 @@ public class DoubleMul {
         return (p0 * p1) * (p2 * p3);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public double test8() {
         double p0 = 1.0;

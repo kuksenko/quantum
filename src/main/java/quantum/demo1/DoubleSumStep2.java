@@ -1,10 +1,11 @@
 package quantum.demo1;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import quantum.util.Utils;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Sergey Kuksenko
  */
-@State
+@State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.AverageTime)
 public class DoubleSumStep2 {
@@ -32,7 +33,7 @@ public class DoubleSumStep2 {
         array = Utils.newRandomDoubleArray(SIZE);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public double test1() {
         double sum = 0.0;
@@ -42,7 +43,7 @@ public class DoubleSumStep2 {
         return sum;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public double testManualUnroll() {
         double sum = 0.0;
@@ -52,7 +53,7 @@ public class DoubleSumStep2 {
         return sum;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public double test2() {
         double sum0 = 0.0;
@@ -64,7 +65,7 @@ public class DoubleSumStep2 {
         return sum0 + sum1;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public double test4() {
         double sum0 = 0.0;
@@ -80,7 +81,7 @@ public class DoubleSumStep2 {
         return (sum0 + sum1) + (sum2 + sum3);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     @OperationsPerInvocation(SIZE)
     public double test8() {
         double sum0 = 0.0;
