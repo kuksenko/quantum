@@ -20,10 +20,10 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *
  * demo7 - How much does communication cost?
  *
- * hint: microbenchmarks should be affinited to different pair of CPUs.
+ * hint: microbenchmarks should be affinited to different pairs of CPUs.
  *
- * e.g.  taskset -c 1,3 java -jar microbenchmarks.jar  ".*PintPong2.*" -f
- *       taskset -c 1,2 java -jar microbenchmarks.jar  ".*PintPong2.*" -f
+ * e.g.  taskset -c 1,3 java -jar benchmarks.jar  ".*PingPong2.*"
+ *       taskset -c 1,2 java -jar benchmarks.jar  ".*PingPong2.*"
  *       taskset -c ...
  *
  * @author Sergey Kuksenko

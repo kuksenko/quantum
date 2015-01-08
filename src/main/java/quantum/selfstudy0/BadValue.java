@@ -42,7 +42,7 @@ public class BadValue {
     @OperationsPerInvocation(SIZE)
     public void testAddNormalValue() {
         for (int i = 0; i < src.length; i++) {
-            dst[i] = src[i] + VALUE1;
+            dst[i] = src[i] * VALUE1;
         }
     }
 
@@ -50,7 +50,7 @@ public class BadValue {
     @OperationsPerInvocation(SIZE)
     public void testAddBadValue() {
         for (int i = 0; i < src.length; i++) {
-            dst[i] = src[i] + VALUE2;
+            dst[i] = src[i] * VALUE2;
         }
     }
 

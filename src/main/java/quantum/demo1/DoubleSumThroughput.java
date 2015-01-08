@@ -47,7 +47,7 @@ public class DoubleSumThroughput {
 
     @Benchmark
     @CompilerControl(CompilerControl.Mode.DONT_INLINE)
-    public double testManualUnroll() {
+    public double manualUnroll() {
         double sum = 0.0;
         for (int i = 0; i < array.length; i += 4) {
             sum += array[i] + array[i + 1] + array[i + 2] + array[i + 3];

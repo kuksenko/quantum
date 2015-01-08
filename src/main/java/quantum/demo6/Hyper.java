@@ -12,8 +12,8 @@ import java.util.concurrent.TimeUnit;
  * demo6 - How does SMT share Functional Units?
  *
  * hint:
- *  - the microbenchmark should be affinited to other logical CPU
  *  - microbenchmark from the quantum.demo6.MapGet class should be affinited to one logical CPU
+ *  - the microbenchmark should be affinited to other logical CPU
  *  - look over different logical CPUs pairs and explain results.
  *
  * @author Sergey Kuksenko

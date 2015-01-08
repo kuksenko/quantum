@@ -2,8 +2,10 @@ package quantum.demo6;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Group;
+import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Warmup;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,11 +14,13 @@ import java.util.concurrent.TimeUnit;
  *
  * demo6 - How does SMT share Functional Units?
  *
- * hint: microbenchmarks should be affinited to different pair of logical CPUs.
+ * hint: microbenchmarks should be affinited to different pairs of logical CPUs.
  *
  * @author Sergey Kuksenko
  */
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
+@Warmup(iterations = 5)
+@Measurement(iterations = 5)
 public class HDivs {
 
 
@@ -29,103 +33,57 @@ public class HDivs {
     public static double d2 = 67.3;
 
     @Benchmark
-    public int lightIntDiv() {
-        return i0 / i1;
-    }
-
-    @Benchmark
     @OperationsPerInvocation(5)
-    public int heavyIntDiv() {
+    public int intDiv() {
         return (i0 / i2) / ((i0 / i1) / (i1 / i2));
     }
 
     @Benchmark
-    public double lightDoubleDiv() {
-        return d0 / d1;
-    }
-
-    @Benchmark
     @OperationsPerInvocation(5)
-    public double heavyDoubleDiv() {
+    public double doubleDiv() {
         return (d0 / d2) / ((d1 / d2) / (d0 / d1));
     }
 
     @Benchmark
-    @Group("lightII")
-    public int int0() {
-        return lightIntDiv();
-    }
-
-    @Benchmark
-    @Group("lightII")
-    public int int1() {
-        return lightIntDiv();
+    @OperationsPerInvocation(5)
+    @Group("int_int")
+    public int iiDiv0() {
+        return intDiv();
     }
 
     @Benchmark
     @OperationsPerInvocation(5)
-    @Group("heavyII")
-    public int intHeavy0() {
-        return heavyIntDiv();
+    @Group("int_int")
+    public int iiDiv1() {
+        return intDiv();
     }
 
     @Benchmark
     @OperationsPerInvocation(5)
-    @Group("heavyII")
-    public int intHeavy1() {
-        return heavyIntDiv();
-    }
-
-    @Benchmark
-    @Group("lightDD")
-    public double double0() {
-        return lightDoubleDiv();
-    }
-
-    @Benchmark
-    @Group("lightDD")
-    public double double1() {
-        return lightDoubleDiv();
+    @Group("double_double")
+    public double ddDiv0() {
+        return doubleDiv();
     }
 
     @Benchmark
     @OperationsPerInvocation(5)
-    @Group("heavyDD")
-    public double doubleHeavy0() {
-        return heavyDoubleDiv();
+    @Group("double_double")
+    public double ddDiv1() {
+        return doubleDiv();
     }
 
     @Benchmark
     @OperationsPerInvocation(5)
-    @Group("heavyDD")
-    public double doubleHeavy1() {
-        return heavyDoubleDiv();
-    }
-
-    @Benchmark
-    @Group("lightID")
-    public int intMixLight() {
-        return lightIntDiv();
-    }
-
-    @Benchmark
-    @Group("lightID")
-    public double doubleMixLight() {
-        return lightDoubleDiv();
+    @Group("double_int")
+    public int diDivInt() {
+        return intDiv();
     }
 
     @Benchmark
     @OperationsPerInvocation(5)
-    @Group("heavyID")
-    public int intMixHeavy() {
-        return heavyIntDiv();
-    }
-
-    @Benchmark
-    @OperationsPerInvocation(5)
-    @Group("heavyID")
-    public double doubleMixHeavy() {
-        return heavyDoubleDiv();
+    @Group("double_int")
+    public double diDivDouble() {
+        return doubleDiv();
     }
 
 }

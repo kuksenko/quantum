@@ -4,13 +4,15 @@ import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
-import quantum.util.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 /**
  * Quantum Performance Effects (demo)
@@ -25,56 +27,55 @@ import java.util.Map;
  * @author Sergey Kuksenko
  */
 @State(Scope.Benchmark)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class MapGet {
 
-    public static final int SIZE = 1024;
+    public static final int SIZE = 1024*2;
+    public static final int FROM = 20001; // shift key values from zero to avoid boxed values caching
 
     private int[] keys;
     private Integer[] boxedKeys;
 
-    public TIntIntMap tmap;
-    public Map<Integer, Integer> jmap;
+    public TIntIntMap third_party_map;
+    public Map<Integer, Integer> jdk_map;
 
     @Setup(Level.Trial)
-    public void init0() {
-        tmap = new TIntIntHashMap();
-        jmap = new HashMap<>();
-
-        keys = Utils.newRandomIntArray(SIZE);
-        boxedKeys = new Integer[SIZE];
-        for (int i = 0; i < SIZE; i++) {
-            boxedKeys[i] = keys[i];
-        }
-
+    public void setup() {
+        third_party_map = new TIntIntHashMap();
+        jdk_map = new HashMap<>();
+        keys = IntStream.range(FROM, FROM + SIZE).toArray();
+        boxedKeys = IntStream.range(FROM, FROM + SIZE).boxed().toArray(Integer[]::new);
         for (int key : keys) {
-            tmap.put(key, key / 2);
-            jmap.put(key, key / 2);
+            third_party_map.put(key, key / 2);
+        }
+        for (Integer key : boxedKeys) {
+            jdk_map.put(key, key / 2);
         }
     }
 
     @Benchmark
-    public int testGetT() {
+    public int test3dParty() {
         int s = 0;
         for (int key : keys) {
-            s += tmap.get(key);
+            s += third_party_map.get(key);
         }
         return s;
     }
 
     @Benchmark
-    public int testGetJ() {
+    public int testJdkPrimitive() {
         int s = 0;
         for (int key : keys) {
-            s += jmap.get(key);
+            s += jdk_map.get(key);
         }
         return s;
     }
 
     @Benchmark
-    public int testGetJBoxed() {
+    public int testJdkBoxed() {
         int s = 0;
         for (Integer key : boxedKeys) {
-            s += jmap.get(key);
+            s += jdk_map.get(key);
         }
         return s;
     }
